@@ -21,10 +21,9 @@ def Add(x1, x2, y1, y2):
     print("x2-y2 is",len(str(x2))-len(str(y2)))
     if len(str(x2)) < len(str(y2)):
         x2 *= 10**(len(str(y2))-len(str(x2)))
-        print(x2,y2)
     elif len(str(x2)) > len(str(y2)):
         y2 *= 10**(len(str(x2))-len(str(y2)))
-        print("Matched decimal place of x2, y2:",x2,y2)
+    print("Matched decimal place of x2, y2:",x2,y2)
     ODL = len(str(x2)) # Original Decimal Length, saved for later
     print(ODL)
     c2 = x2 + y2
