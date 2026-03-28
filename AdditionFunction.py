@@ -19,6 +19,7 @@ def Add(x1, x2, y1, y2):
     print("Length of x2 is",len(str(x2)))
     print("Length of y2 is",len(str(y2)))
     print("x2-y2 is",len(str(x2))-len(str(y2)))
+    # Match the decimal parts for calculating
     if len(str(x2)) < len(str(y2)):
         x2 *= 10**(len(str(y2))-len(str(x2)))
     elif len(str(x2)) > len(str(y2)):
@@ -28,7 +29,7 @@ def Add(x1, x2, y1, y2):
     print(ODL)
     c2 = x2 + y2
     PreOutputc2 = str(c2) # turn c2 into a string for slicing
-    if len(str(c2)) > ODL:
+    if len(str(c2)) > ODL: #Carry-over logic, e.g. 0.6 + 0.6 = 1.2 and NOT 0.12
         Fixedc2 = PreOutputc2[1:]
         Fixedc1 = str(c1 + 1)
     else:
