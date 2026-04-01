@@ -16,7 +16,7 @@ def Add(x1, x2, y1, y2):
     c1 = x1 + y1
     print(c1)
     # calculating decimal numbers
-    # Match the decimal parts for calculating
+    # Match the fractional parts for calculating
     if len(str(x2)) < len(str(y2)):
         x2 *= 10**(len(str(y2))-len(str(x2)))
     elif len(str(x2)) > len(str(y2)):
