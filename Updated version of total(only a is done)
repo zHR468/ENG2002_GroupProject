@@ -1,0 +1,96 @@
+def Menu(): 
+    while True:
+        tot=0.0
+        print("\n[a] Perform an addition task ")
+        print("[b] Perform power task ")
+        print("[c] Exit ")
+        choice=input("Please enter your choice (a, b and c:)")
+       
+        if choice== 'a':
+            x1,x2,y1,y2= userinput() #The user is asked to enter the integer and fraction parts of the 2 numbers to be fixed. The function returns those 4 values to used in the addition function. 
+            Fixedc1, Fixedc2= Add(x1,x2,y1,y2) #The addition function takes the 4 values from userinput, calculates the sum of the integer and fraction parts separately, and returns the fixed-point result as two strings: Fixedc1 for the integer part and Fixedc2 for the fractional part.
+            print("The result of addition is: " + Fixedc1 + "." + Fixedc2) #The result of addition is printed in the format "Fixedc1.Fixedc2", where Fixedc1 is the integer part and Fixedc2 is the fractional part of the sum.
+            ans=input("Would you like to add this to sum? Yes(y) or No(N)?")
+            if ans=='y':
+                # Add the result to the sum
+                tot += float(Fixedc1 + "." + Fixedc2)
+                print("Current total is {}".format(tot)) #Show the updated total after addition of the previous sums. 
+            else:
+                break
+            
+        elif choice=='b':
+            pass
+
+        elif choice=='c': 
+            print("Goodbye!")
+            break
+
+        else: 
+            print("You have inputted wrong option. Please try again!")
+
+
+def userinput(): #The user is asked to enter the integer and fraction parts of the 2 numbers to be fixed. The function returns those 4 values to used in the addition function.
+    x1=int(input("Enter integer part of 1st number to fix: "))
+    x2=input("Enter fraction part of 1st number to fix: ")
+    y1=int(input("Enter integer part of 2nd number to fix: "))
+    y2=input("Enter fraction part of 2nd number to fix: ")
+    return x1, x2, y1, y2
+
+class fixNum:
+
+    """
+    The core idea is to represent the number as a fixed-point number with a certain number of fractional digits.
+    In function,
+    a will be the integer part,
+    and b will be the fractional part.
+    b_len stores how many digits b has (for aligning decimals when adding later).
+    """
+    
+    def __init__(self, a, b):
+        # force a and b to be integers
+        self.a = int(a)
+        self.b = int(b)
+
+        # length of b as a digit string (for decimal alignment)
+        self.b_len = len(str(abs(self.b)))
+
+        # In the assignment: if a is non-zero, b must be positive.
+        if self.a != 0:
+            self.b = abs(self.b)
+
+    def __str__(self):
+        # format will be "a.b"
+        a_part = str(self.a)
+        b_part = str(abs(self.b))
+
+        # catch the special negative zero case (e.g., -0.48)
+        if self.a == 0 and self.b < 0:
+            return "-" + a_part + "." + b_part
+        else:
+            return a_part + "." + b_part
+
+def Add(x1, x2, y1, y2):
+    # calculation of whole part
+    c1 = x1 + y1
+
+    # calculation of fractional part, match their decimal place
+
+    if len(str(x2)) < len(str(y2)):
+        x2 *= 10**(len(str(y2))-len(str(x2)))
+    elif len(str(x2)) > len(str(y2)):
+        y2 *= 10**(len(str(x2))-len(str(y2)))
+
+    ODL = len(str(x2)) # Original Decimal Length, saved for later, (x2 can be y2, whichever is fine)
+
+    c2 = x2 + y2
+    PreOutputc2 = str(c2) # turn c2 into a string for slicing when carryover happens
+    
+    if len(str(c2)) > ODL: # carryover has happened and c2 is longer than x2/y2
+        Fixedc2 = PreOutputc2[1:]
+        Fixedc1 = str(c1 + 1)
+    else:                  # carryover has NOT happened and c2 is NOT longer than x2/y2
+        Fixedc2 = PreOutputc2
+        Fixedc1 = str(c1)
+    return(Fixedc1, Fixedc2)
+
+Menu()
