@@ -10,7 +10,7 @@ class fixNum:
     
     def __init__(self, a, b):
         # count the number of digits in b, store as self.b_original_len
-        self.b_original_len = len(str(abs(b)))
+        self.b_original_len = len(str(b))
 
         # force a and b to be integers
         self.a = int(a)
