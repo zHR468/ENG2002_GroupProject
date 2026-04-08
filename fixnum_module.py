@@ -22,7 +22,7 @@ class fixNum:
 
     def __str__(self):
         # format will be "a.b"
-        a_part = str(self.a)
+        a_part = self.a
         b_str = str(self.b)
 
         #add the zeros b_part lost when set into int value
