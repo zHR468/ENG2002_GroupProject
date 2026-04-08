@@ -9,9 +9,20 @@ class fixNum:
     """
     
     def __init__(self, a, b):
-        # count the number of digits in b, store as self.b_original_len
-        self.b_original_len = len(str(b))
+        #read the very original length of b
+        b_len_start = str(b)
 
+         """
+         count the number of digits in b, store as self.b_original_len
+         if b is negative, it would start with '-', then the length would count the icon '-';
+         so we need to make it length minus 1 in order to count the numbers correctly
+         """
+        
+        if self.b_str_start[0] == "-":
+            self.b_original_len = len(b_len_start) - 1
+        else:
+            self.b_original_len = len(b_len_start)
+            
         # force a and b to be integers
         self.a = int(a)
         self.b = int(b)
@@ -19,7 +30,7 @@ class fixNum:
         # In the assignment: if a is non-zero, b must be positive.
         if self.a != 0:
             self.b = abs(self.b)
-
+        
     def __str__(self):
         # format will be "a.b"
         a_part = self.a
