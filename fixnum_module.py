@@ -9,12 +9,12 @@ class fixNum:
     """
     
     def __init__(self, a, b):
+        # count the number of digits in b, store as self.b_original_len
+        self.b_original_len = len(str(abs(b)))
+
         # force a and b to be integers
         self.a = int(a)
         self.b = int(b)
-
-        # length of b as a digit string (for decimal alignment)
-        self.b_len = len(str(abs(self.b)))
 
         # In the assignment: if a is non-zero, b must be positive.
         if self.a != 0:
@@ -23,8 +23,10 @@ class fixNum:
     def __str__(self):
         # format will be "a.b"
         a_part = str(self.a)
-        b_part = str(abs(self.b))
+        b_str = str(self.b)
 
+        #add the zeros b_part lost when set into int value
+        b_part = "0" * (self.b_original_len - len(b_str)) + b_str
         # catch the special negative zero case (e.g., -0.48)
         if self.a == 0 and self.b < 0:
             return "-" + a_part + "." + b_part
