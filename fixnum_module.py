@@ -18,7 +18,7 @@ class fixNum:
          so we need to make it length minus 1 in order to count the numbers correctly
          """
         
-        if self.b_str_start[0] == "-":
+        if self.b_len_start[0] == "-":
             self.b_original_len = len(b_len_start) - 1
         else:
             self.b_original_len = len(b_len_start)
@@ -33,8 +33,8 @@ class fixNum:
         
     def __str__(self):
         # format will be "a.b"
-        a_part = self.a
-        b_str = str(self.b)
+        a_part = str(self.a)
+        b_str = str(abs(self.b))
 
         #add the zeros b_part lost when set into int value
         b_part = "0" * (self.b_original_len - len(b_str)) + b_str
