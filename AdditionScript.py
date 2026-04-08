@@ -43,6 +43,9 @@ def Add(x1, x2, y1, y2):
     if len(PreOutputc2) > DecLen: # carryover has happened and c2 is longer than x2/y2
         Fixedc2 = PreOutputc2[1:]
         Fixedc1 = c1 + 1
+    elif len(PreOutputc2) < DecLen:
+        Fixedc2 = "0"*(DecLen-len(PreOutputc2)) + PreOutputc2
+        Fixedc1 = c1
     else:                  # carryover has NOT happened and c2 is NOT longer than x2/y2
         Fixedc2 = PreOutputc2
         Fixedc1 = c1
