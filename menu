@@ -1,0 +1,130 @@
+class fixNum:
+    """
+    docstring needed here
+    """
+    def __init__(self, a,b):
+        """
+        docstring needed here
+
+        """
+        self.a = int(a)
+        self.b = str(b)#we maintain b as a string in order to cater for leadning zeros later on
+
+        #store the length of the fractional part
+        self.b_len = len(self.b)
+        
+        if self.a >0 and self.b.startswith('-'):
+            #ensure that the method is valid for all instances created by the user by ensuring that b is positive if a is positive
+            self.b = self.b[1:]
+
+    def __str__(self):
+        """
+        return a string representation of the fixed point number
+        """
+        return (f"{self.a}.{self.b}")
+
+    def _add_positive(self, other):
+        """
+        docstring needed here
+        adds positive fixed point numbers
+        """
+        max_len = max(self.b_len,other.b_len) #we take the longer length of the decimal to cater for leading zeros and different decimal lengths
+        b1 = selb.b
+        b2 = other.b
+
+        #we add zeros at the right side of the shorter fractional part to cater for different decimal lengths
+        while len(b1)< max_len:
+            b1 +='0'
+        while len(b2)<max_len:
+            b2 +='0'
+
+        #we now convert them to integers for calculation
+        B1 = int(b1)
+        B2 = int(b2)
+        total_b = B1+B2
+
+        #calculate the figure to carry over to the integer part using the integer division
+        carry = total_b//(10**max_len)
+        
+        #calculate new decimal part using the remainder function
+        new_b = total_b % (10**max_len)
+
+        #calculate the new integer part by adding the carry to the initial a from self and other
+        new_a = self.a + other.a + carry
+
+       #we conver the new b to a string to cater for leading zeros
+        new_b_str = str(new_b)
+        #to restore leading zeros, we add '0's to the left side of the string of new_b if the new length of b is less the maximum length of the initial decimals
+        while len(new_b_str)<max_len:
+            new_b_str = '0' + new_b_str
+
+        return fixNum(new_a,new_b_str)
+
+    def is_greater(self, other):
+        """
+        docstring needed here
+        this code is for checking which is negative and which is positive in case we have one number positive and one negative
+        """
+
+
+    def subtract(self, other):
+        """
+        docstring needed here
+        this code subtracts the smaller one from the bigger one
+        uses same approach as the add_positive method but replaces + with - and borrows instead of carrying
+        """
+        max_len = max(self.b_len,other.b_len) #we take the longer length of the decimal to cater for leading zeros and different decimal lengths
+        b1 = selb.b
+        b2 = other.b
+
+        #we add zeros at the right side of the shorter fractional part to cater for different decimal lengths
+        while len(b1)< max_len:
+            b1 +='0'
+        while len(b2)<max_len:
+            b2 +='0'
+
+        #we now convert them to integers for calculation
+        B1 = int(b1)
+        B2 = int(b2)
+
+        #if the decimal section of the bigger float is smaller than that of the smaller float, then we borrow
+        if B1<B2:
+            B1 +=10**max_len
+            borrow = 1
+        else:
+            borrow = 0
+        #the new b and new a are determined through subtraction
+        new_b = B1-B2
+        new_a = self.a - self.b-borrow
+
+         #we conver the new b to a string to cater for leading zeros
+        new_b_str = str(new_b)
+        #to restore leading zeros, we add '0's to the left side of the string of new_b if the new length of b is less the maximum length of the initial decimals
+        while len(new_b_str)<max_len:
+            new_b_str = '0' + new_b_str
+
+        return fixNum(new_a,new_b_str)
+
+    def add(self, other):
+        """
+        docstring needed here
+        determines which method to use whether both are positive or both are negative or mixed signs
+        """
+        #this case is for when both numbers are posituve
+        if self.a>=0 and other.a>=o:
+            return self._add_positive(other)
+                                     
+        #this case is for when both numbers are negative
+        if self.a<0 and other.a<0:
+            #we treat them as positives and return the negative at the end
+            num1 = fixNum(abs(self.a),self.b)
+            num2 = fixNum(abs(other.a),other.b)
+            result = num1._add_positive(num2)
+            result.a = -result.a #we make the new a a negative
+            return result
+
+        if self.a >=0:
+            
+                                      
+
+        
