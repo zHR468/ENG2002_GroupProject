@@ -3,7 +3,7 @@ class fixNum:
     docstring needed here
     """
     def __init__(self, a,b):
-        """
+        """n
         docstring needed here
 
         """
