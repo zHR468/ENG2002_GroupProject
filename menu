@@ -65,6 +65,11 @@ class fixNum:
         docstring needed here
         this code is for checking which is negative and which is positive in case we have one number positive and one negative
         """
+        #compare integer parts to determine which number is positive or negative
+        if self.a>other.a:
+            return True
+        elif self.a<other.a:
+            return False
 
 
     def subtract(self, other):
@@ -123,7 +128,40 @@ class fixNum:
             result.a = -result.a #we make the new a a negative
             return result
 
-        if self.a >=0:
+        else:
+            if self.is_greater(other):
+                result = self.subtract(other)
+            else:
+                result = other.subtract(self)
+            return result
+    
+    def power(self, n):
+        """
+        doc strings needed here
+        """
+        if self.a == 0 and int(self.b)==0:
+            return("Error: 0 cannot be raised to any power")
+
+        k = len(self.b)
+        base = int(str(abs(self.a))+self.b)#we combine a and b and convert the result into an integer
+
+        if n == 0:
+            return("the answer is 1")
+        elif n>0:
+            result = (base/(10**k)) **(n)#raise to the power
+           
+        else:
+            result = 1/(base/(10**k))**(abs(n))
+           
+        
+        
+        a,b = str(result).split('.')#we split the value into the integer and frational part
+        return fixNum(a,b)
+
+
+        
+
+
             
                                       
 
