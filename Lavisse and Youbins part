@@ -8,13 +8,13 @@ class fixNum:
 
         """
         self.a = int(a)
-        self.b = str(b) # keep as string for leading zeros
+        self.b = str(b)
 
         # if a is not zero → b must be positive
         if self.a != 0:
             self.b = self.b.lstrip('-')
 
-        # store length (ignore negative sign)
+        # store length ignoring sign
         self.b_len = len(self.b.lstrip('-'))
         
         if self.a > 0 and self.b.startswith('-'):
@@ -67,7 +67,10 @@ class fixNum:
         elif self.a < other.a:
             return False
         else:
-            return False # minimal fix
+            # compare fractional parts if a is equal
+            b1 = int(self.b.lstrip('-'))
+            b2 = int(other.b.lstrip('-'))
+            return b1 > b2
 
     def subtract(self, other):
         """
@@ -93,7 +96,7 @@ class fixNum:
             borrow = 0
 
         new_b = B1 - B2
-        new_a = self.a - other.a - borrow # FIXED
+        new_a = self.a - other.a - borrow
 
         new_b_str = str(new_b)
         while len(new_b_str) < max_len:
@@ -106,7 +109,7 @@ class fixNum:
         docstring needed here
         """
 
-        # determine signs
+        # detect signs
         self_neg = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
         other_neg = (other.a < 0) or (other.a == 0 and other.b.startswith('-'))
 
@@ -122,11 +125,11 @@ class fixNum:
             result.a = -result.a
             return result
 
-        # mixed signs
-        if self.is_greater(other):
-            return self.subtract(other)
-        else:
+        # mixed signs → force subtraction properly
+        if self_neg and not other_neg:
             return other.subtract(self)
+        else:
+            return self.subtract(other)
 
     def power(self, n):
         """
