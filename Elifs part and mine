@@ -28,7 +28,7 @@ def save_sum(num):
     f = open("sum.txt","w")
     #writes the a and b parts of the calculated sum into the file
     f.write(f"{num.a} {num.b}")
-    f.close
+    f.close()
 
 def get_sum():
     """
@@ -38,7 +38,7 @@ def get_sum():
         f = open("sum.txt","r")
         #assigns val
         a,b = f.read().split()
-        f.close
+        f.close()
     
         return fixNum(int(a),b)
     except FileNotFound:
