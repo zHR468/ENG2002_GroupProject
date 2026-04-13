@@ -41,7 +41,7 @@ def get_sum():
         f.close()
     
         return fixNum(int(a),b)
-    except FileNotFound:
+    except FileNotFoundError:
         return fixNum(0,'0')
 
 def menu():
