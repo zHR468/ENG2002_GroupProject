@@ -11,7 +11,7 @@ class fixNum:
     def __init__(self, a, b):
         # force a and b to be integers
         self.a = int(a)
-        self.b = int(b)
+        self.b = str(b) #stored as a string to handle leading 0s later
 
         # length of b as a digit string (for decimal alignment)
         self.b_len = len(str(abs(self.b)))

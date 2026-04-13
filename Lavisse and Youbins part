@@ -8,160 +8,173 @@ class fixNum:
 
         """
         self.a = int(a)
-        self.b = str(b)#we maintain b as a string in order to cater for leadning zeros later on
+        self.b = str(b) # keep as string for leading zeros
 
-        #store the length of the fractional part
-        self.b_len = len(self.b)
+        # Handle sign case: if a == 0, sign comes from b
+        if self.a == 0 and self.b.startswith('-'):
+            pass
+        elif self.a != 0:
+            self.b = self.b.lstrip('-') # ensure b positive if a != 0
+
+        # store length of fractional part (ignore sign)
+        self.b_len = len(self.b.lstrip('-'))
         
-        if self.a >0 and self.b.startswith('-'):
-            #ensure that the method is valid for all instances created by the user by ensuring that b is positive if a is positive
+        if self.a > 0 and self.b.startswith('-'):
             self.b = self.b[1:]
 
     def __str__(self):
         """
         return a string representation of the fixed point number
         """
-        return (f"{self.a}.{self.b}")
+        if self.a == 0 and self.b.startswith('-'):
+            return f"-0.{self.b.lstrip('-')}"
+        return f"{self.a}.{self.b.lstrip('-')}"
 
     def _add_positive(self, other):
         """
         docstring needed here
         adds positive fixed point numbers
         """
-        max_len = max(self.b_len,other.b_len) #we take the longer length of the decimal to cater for leading zeros and different decimal lengths
-        b1 = selb.b
-        b2 = other.b
+        max_len = max(self.b_len, other.b_len)
 
-        #we add zeros at the right side of the shorter fractional part to cater for different decimal lengths
-        while len(b1)< max_len:
-            b1 +='0'
-        while len(b2)<max_len:
-            b2 +='0'
+        b1 = self.b.lstrip('-')
+        b2 = other.b.lstrip('-')
 
-        #we now convert them to integers for calculation
+        while len(b1) < max_len:
+            b1 += '0'
+        while len(b2) < max_len:
+            b2 += '0'
+
         B1 = int(b1)
         B2 = int(b2)
-        total_b = B1+B2
+        total_b = B1 + B2
 
-        #calculate the figure to carry over to the integer part using the integer division
-        carry = total_b//(10**max_len)
-        
-        #calculate new decimal part using the remainder function
-        new_b = total_b % (10**max_len)
+        carry = total_b // (10 ** max_len)
+        new_b = total_b % (10 ** max_len)
 
-        #calculate the new integer part by adding the carry to the initial a from self and other
         new_a = self.a + other.a + carry
 
-       #we conver the new b to a string to cater for leading zeros
         new_b_str = str(new_b)
-        #to restore leading zeros, we add '0's to the left side of the string of new_b if the new length of b is less the maximum length of the initial decimals
-        while len(new_b_str)<max_len:
+        while len(new_b_str) < max_len:
             new_b_str = '0' + new_b_str
 
-        return fixNum(new_a,new_b_str)
+        return fixNum(new_a, new_b_str)
 
     def is_greater(self, other):
         """
         docstring needed here
-        this code is for checking which is negative and which is positive in case we have one number positive and one negative
         """
-        #compare integer parts to determine which number is positive or negative
-        if self.a>other.a:
+        if self.a > other.a:
             return True
-        elif self.a<other.a:
+        elif self.a < other.a:
             return False
 
+        # if integer parts equal → compare fractional
+        max_len = max(self.b_len, other.b_len)
+
+        b1 = self.b.lstrip('-')
+        b2 = other.b.lstrip('-')
+
+        while len(b1) < max_len:
+            b1 += '0'
+        while len(b2) < max_len:
+            b2 += '0'
+
+        return int(b1) > int(b2)
 
     def subtract(self, other):
         """
         docstring needed here
-        this code subtracts the smaller one from the bigger one
-        uses same approach as the add_positive method but replaces + with - and borrows instead of carrying
         """
-        max_len = max(self.b_len,other.b_len) #we take the longer length of the decimal to cater for leading zeros and different decimal lengths
-        b1 = selb.b
-        b2 = other.b
+        max_len = max(self.b_len, other.b_len)
 
-        #we add zeros at the right side of the shorter fractional part to cater for different decimal lengths
-        while len(b1)< max_len:
-            b1 +='0'
-        while len(b2)<max_len:
-            b2 +='0'
+        b1 = self.b.lstrip('-')
+        b2 = other.b.lstrip('-')
 
-        #we now convert them to integers for calculation
+        while len(b1) < max_len:
+            b1 += '0'
+        while len(b2) < max_len:
+            b2 += '0'
+
         B1 = int(b1)
         B2 = int(b2)
 
-        #if the decimal section of the bigger float is smaller than that of the smaller float, then we borrow
-        if B1<B2:
-            B1 +=10**max_len
+        if B1 < B2:
+            B1 += 10 ** max_len
             borrow = 1
         else:
             borrow = 0
-        #the new b and new a are determined through subtraction
-        new_b = B1-B2
-        new_a = self.a - self.b-borrow
 
-         #we conver the new b to a string to cater for leading zeros
+        new_b = B1 - B2
+        new_a = self.a - other.a - borrow # FIXED (was wrong before)
+
         new_b_str = str(new_b)
-        #to restore leading zeros, we add '0's to the left side of the string of new_b if the new length of b is less the maximum length of the initial decimals
-        while len(new_b_str)<max_len:
+        while len(new_b_str) < max_len:
             new_b_str = '0' + new_b_str
 
-        return fixNum(new_a,new_b_str)
+        return fixNum(new_a, new_b_str)
 
     def add(self, other):
         """
         docstring needed here
-        determines which method to use whether both are positive or both are negative or mixed signs
         """
-        #this case is for when both numbers are posituve
-        if self.a>=0 and other.a>=o:
+
+        # determine signs
+        self_neg = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
+        other_neg = (other.a < 0) or (other.a == 0 and other.b.startswith('-'))
+
+        # both positive
+        if not self_neg and not other_neg:
             return self._add_positive(other)
-                                     
-        #this case is for when both numbers are negative
-        if self.a<0 and other.a<0:
-            #we treat them as positives and return the negative at the end
-            num1 = fixNum(abs(self.a),self.b)
-            num2 = fixNum(abs(other.a),other.b)
+
+        # both negative
+        if self_neg and other_neg:
+            num1 = fixNum(abs(self.a), self.b.lstrip('-'))
+            num2 = fixNum(abs(other.a), other.b.lstrip('-'))
             result = num1._add_positive(num2)
-            result.a = -result.a #we make the new a a negative
+            result.a = -result.a
             return result
 
+        # mixed signs → subtraction
+        if self.is_greater(other):
+            return self.subtract(other)
         else:
-            if self.is_greater(other):
-                result = self.subtract(other)
-            else:
-                result = other.subtract(self)
-            return result
-    
+            return other.subtract(self)
+
     def power(self, n):
         """
         doc strings needed here
         """
-        if self.a == 0 and int(self.b)==0:
-            return("Error: 0 cannot be raised to any power")
+        if self.a == 0 and int(self.b.lstrip('-')) == 0:
+            return "Error: 0 cannot be raised to any power"
 
-        k = len(self.b)
-        base = int(str(abs(self.a))+self.b)#we combine a and b and convert the result into an integer
+        k = len(self.b.lstrip('-'))
+
+        # determine sign
+        is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
+
+        clean_b = self.b.lstrip('-')
+        base = int(str(abs(self.a)) + clean_b)
+
+        if is_negative:
+            base *= -1
 
         if n == 0:
-            return("the answer is 1")
-        elif n>0:
-            result = (base/(10**k)) **(n)#raise to the power
-           
+            return fixNum(1, "0")
+
+        elif n > 0:
+            num = base ** n
+            den = 10 ** (k * n)
+
         else:
-            result = 1/(base/(10**k))**(abs(n))
-           
-        
-        
-        a,b = str(result).split('.')#we split the value into the integer and frational part
-        return fixNum(a,b)
+            num = 10 ** (k * abs(n))
+            den = base ** abs(n)
 
+        new_a = num // den
+        new_b = abs(num % den)
 
-        
+        new_b_str = str(new_b)
+        while len(new_b_str) < k * abs(n):
+            new_b_str = '0' + new_b_str
 
-
-            
-                                      
-
+        return fixNum(new_a, new_b_str)
