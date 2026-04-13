@@ -80,8 +80,8 @@ def menu():
                     break
                 except ValueError:
                     print("Invalid input. Enter a number")
-                result = num.power(n)
-                print(f"The result is {result}")
+            result = num.power(n)
+            print(f"The result is {result}")
             
 
         elif choice == '3':
