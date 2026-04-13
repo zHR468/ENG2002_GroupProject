@@ -18,6 +18,14 @@ class fixNum:
          so we need to make it length minus 1 in order to count the numbers correctly
         """
         
+        
+        #remove the extra zeros that do not need
+        b_len_start = b_len_start.rstrip('0')
+        if b_len_start == "" or b_len_start == "-":
+            
+            b_len_start += "0"
+
+
         if b_len_start[0] == "-":
             self.b_original_len = len(b_len_start) - 1
         else:
