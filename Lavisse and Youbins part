@@ -69,16 +69,17 @@ class fixNum:
         else:
             b1_str = self.b.lstrip('-')
             b2_str = other.b.lstrip('-')
+
             max_len = max(len(b1_str), len(b2_str))
-            
-            # align parts for comparison
+
             b1_aligned = b1_str
+            b2_aligned = b2_str
+
             while len(b1_aligned) < max_len:
                 b1_aligned += '0'
-            b2_aligned = b2_str
             while len(b2_aligned) < max_len:
                 b2_aligned += '0'
-                
+
             return int(b1_aligned) > int(b2_aligned)
 
     def subtract(self, other):
@@ -95,7 +96,6 @@ class fixNum:
         b1 = self.b.lstrip('-')
         b2 = other.b.lstrip('-')
 
-        # align parts for subtraction
         while len(b1) < max_len:
             b1 += '0'
         while len(b2) < max_len:
@@ -148,6 +148,7 @@ class fixNum:
         """
         Raises the fixed-point number to power n.
         """
+
         if self.a == 0 and int(self.b.lstrip('-')) == 0:
             return "Error: 0 cannot be raised to any power"
 
@@ -163,28 +164,37 @@ class fixNum:
         if n == 0:
             return fixNum(1, "0")
 
-        # use target_len to help with precision
-        target_len = 2
-
+        # n > 0
         if n > 0:
             num = base ** n
             den = 10 ** (k * n)
             final_len = k * n
+
+            new_a = num // den
+            new_b = abs(num % den)
+
+            new_b_str = str(new_b)
+            while len(new_b_str) < final_len:
+                new_b_str = '0' + new_b_str
+
+            return fixNum(new_a, new_b_str)
+
+        # n < 0
         else:
-            # handle negative power calculation
-            num = (10**k * 10**target_len) ** abs(n)
-            den = base ** abs(n)
-            final_len = target_len
+            abs_n = abs(n)
 
-        new_a = num // den
-        new_b = abs(num % den)
+            precision = 2
 
-        new_b_str = str(new_b)
-        # manually add leading zeros
-        while len(new_b_str) < final_len:
-            new_b_str = '0' + new_b_str
-        
-        # limit length of fractional part
-        new_b_str = new_b_str[:final_len]
+            num = (10 ** (k * abs_n)) * (10 ** precision)
+            den = base ** abs_n
 
-        return fixNum(int(new_a), new_b_str)
+            total_result = num // den
+
+            new_a = total_result // (10 ** precision)
+            new_b = total_result % (10 ** precision)
+
+            new_b_str = str(new_b)
+            while len(new_b_str) < precision:
+                new_b_str = '0' + new_b_str
+
+            return fixNum(new_a, new_b_str)
