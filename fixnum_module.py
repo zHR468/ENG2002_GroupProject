@@ -12,11 +12,11 @@ class fixNum:
         #read the very original length of b
         b_len_start = str(b)
 
-         """
+        """
          count the number of digits in b, store as self.b_original_len
          if b is negative, it would start with '-', then the length would count the icon '-';
          so we need to make it length minus 1 in order to count the numbers correctly
-         """
+        """
         
         if self.b_len_start[0] == "-":
             self.b_original_len = len(b_len_start) - 1
