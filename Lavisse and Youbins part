@@ -12,7 +12,7 @@ class fixNum:
         self.a = int(a)
         self.b = str(b)
 
-        # [span_3](start_span)ensure rule: if a != 0, b must be positive[span_3](end_span)
+        # ensure rule: if a != 0, b must be positive
         if self.a != 0:
             self.b = self.b.lstrip('-')
 
@@ -29,14 +29,14 @@ class fixNum:
 
     def _add_positive(self, other):
         """
-        [span_4](start_span)Adds two positive fixed-point numbers[span_4](end_span).
+        Adds two positive fixed-point numbers.
         """
         max_len = max(self.b_len, other.b_len)
 
         b1 = self.b.lstrip('-')
         b2 = other.b.lstrip('-')
 
-        # Align fractional lengths
+        # align fractional parts
         while len(b1) < max_len:
             b1 += '0'
         while len(b2) < max_len:
@@ -60,7 +60,7 @@ class fixNum:
 
     def is_greater(self, other):
         """
-        [span_5](start_span)Checks if self is greater than other[span_5](end_span).
+        Checks if self is greater than other.
         """
         if self.a > other.a:
             return True
@@ -71,7 +71,7 @@ class fixNum:
             b2_str = other.b.lstrip('-')
             max_len = max(len(b1_str), len(b2_str))
             
-            # Align parts for comparison
+            # align parts for comparison
             b1_aligned = b1_str
             while len(b1_aligned) < max_len:
                 b1_aligned += '0'
@@ -83,7 +83,7 @@ class fixNum:
 
     def subtract(self, other):
         """
-        [span_6](start_span)Subtracts other from self (self - other)[span_6](end_span).
+        Subtracts other from self (self - other).
         """
         if not self.is_greater(other):
             result = other.subtract(self)
@@ -95,6 +95,7 @@ class fixNum:
         b1 = self.b.lstrip('-')
         b2 = other.b.lstrip('-')
 
+        # align parts for subtraction
         while len(b1) < max_len:
             b1 += '0'
         while len(b2) < max_len:
@@ -120,7 +121,7 @@ class fixNum:
 
     def add(self, other):
         """
-        [span_7](start_span)Adds two fixed-point numbers[span_7](end_span).
+        Adds two fixed-point numbers, handling all sign cases.
         """
         self_neg = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
         other_neg = (other.a < 0) or (other.a == 0 and other.b.startswith('-'))
@@ -145,10 +146,10 @@ class fixNum:
 
     def power(self, n):
         """
-        [span_8](start_span)Raises the fixed-point number to power n[span_8](end_span).
+        Raises the fixed-point number to power n.
         """
         if self.a == 0 and int(self.b.lstrip('-')) == 0:
-            [span_9](start_span)return "Error: 0 cannot be raised to any power"[span_9](end_span)
+            return "Error: 0 cannot be raised to any power"
 
         k = len(self.b.lstrip('-'))
         is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
@@ -162,16 +163,15 @@ class fixNum:
         if n == 0:
             return fixNum(1, "0")
 
-        # Create a variable to define how many decimal places we want in the answer
+        # use target_len to help with precision
         target_len = 2
 
         if n > 0:
             num = base ** n
             den = 10 ** (k * n)
-            # For positive powers, the decimal length grows
             final_len = k * n
         else:
-            # [span_10](start_span)For negative powers, we use our target_len (2) to keep it simple[span_10](end_span)
+            # handle negative power calculation
             num = (10**k * 10**target_len) ** abs(n)
             den = base ** abs(n)
             final_len = target_len
@@ -180,11 +180,11 @@ class fixNum:
         new_b = abs(num % den)
 
         new_b_str = str(new_b)
-        # [span_11](start_span)Manually add leading zeros (instead of zfill)[span_11](end_span)
+        # manually add leading zeros
         while len(new_b_str) < final_len:
             new_b_str = '0' + new_b_str
         
-        # Ensure we only show the number of places defined by final_len
+        # limit length of fractional part
         new_b_str = new_b_str[:final_len]
 
         return fixNum(int(new_a), new_b_str)
