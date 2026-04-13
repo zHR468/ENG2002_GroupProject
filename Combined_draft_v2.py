@@ -22,7 +22,7 @@ class fixNum:
         #remove the extra zeros that do not need
         b_len_start = b_len_start.rstrip('0')
         if b_len_start == "" or b_len_start == "-":
-            
+
             b_len_start += "0"
 
 
@@ -33,7 +33,7 @@ class fixNum:
             
         # force a and b to be integers
         self.a = int(a)
-        self.b = int(b)
+        self.b = int(b_len_start)
  
         # In the assignment: if a is non-zero, b must be positive.
         if self.a != 0:
