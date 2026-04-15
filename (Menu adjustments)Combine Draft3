@@ -1,0 +1,232 @@
+class fixNum:
+ 
+    """
+    The core idea is to represent the number as a fixed-point number with a certain number of fractional digits.
+    In function,
+    a will be the integer part,
+    and b will be the fractional part.
+    b_len stores how many digits b has (for aligning decimals when adding later).
+    """
+    
+    def __init__(self, a, b):
+        #read the very original length of b
+        b_len_start = str(b)
+ 
+        """
+         count the number of digits in b, store as self.b_original_len
+         if b is negative, it would start with '-', then the length would count the icon '-';
+         so we need to make it length minus 1 in order to count the numbers correctly
+        """
+        
+        
+        #remove the extra zeros that do not need
+        b_len_start = b_len_start.rstrip('0')
+        if b_len_start == "" or b_len_start == "-":
+
+            b_len_start += "0"
+
+
+        if b_len_start[0] == "-":
+            self.b_original_len = len(b_len_start) - 1
+        else:
+            self.b_original_len = len(b_len_start)
+            
+        # force a and b to be integers
+        self.a = int(a)
+        self.b = int(b_len_start)
+ 
+        # In the assignment: if a is non-zero, b must be positive.
+        if self.a != 0:
+            self.b = abs(self.b)
+        
+    def __str__(self):
+        # format will be "a.b"
+        a_part = str(self.a)
+        b_str = str(abs(self.b))
+ 
+        #add the zeros b_part lost when set into int value
+        b_part = "0" * (self.b_original_len - len(b_str)) + b_str
+        # catch the special negative zero case (e.g., -0.48)
+        if self.a == 0 and self.b < 0:
+            return "-" + a_part + "." + b_part
+        else:
+            return a_part + "." + b_part
+ 
+    def add(self, other):
+        """
+        Adds this fixed-point number with another fixed-point number.
+        Returns the result as a new fixNum object.
+        """
+        # get fractional parts as strings, padded with leading zeros
+        x2 = "0" * (self.b_original_len - len(str(abs(self.b)))) + str(abs(self.b))
+        y2 = "0" * (other.b_original_len - len(str(abs(other.b)))) + str(abs(other.b))
+ 
+        # match decimal places by adding zeros to the shorter one
+        while len(x2) < len(y2):
+            x2 += "0"
+        while len(x2) > len(y2):
+            y2 += "0"
+ 
+        DecLen = len(x2)
+        scale = 10 ** DecLen
+ 
+        # combine integer and fractional parts into one scaled integer
+        ScaledX = abs(self.a) * scale + int(x2)
+        ScaledY = abs(other.a) * scale + int(y2)
+ 
+        # apply the sign
+        if self.a < 0 or (self.a == 0 and self.b < 0):
+            ScaledX = -ScaledX
+        if other.a < 0 or (other.a == 0 and other.b < 0):
+            ScaledY = -ScaledY
+ 
+        PreOutput = ScaledX + ScaledY
+ 
+        # split back into integer and fractional parts
+        int_part = PreOutput // scale
+        remainder = PreOutput % scale
+ 
+        # handle negative results
+        if PreOutput < 0 and remainder != 0:
+            int_part += 1
+            frac_part = scale - remainder
+            if int_part == 0:
+                frac_part = -frac_part
+        else:
+            frac_part = remainder
+ 
+        frac_str = "0" * (DecLen - len(str(abs(frac_part)))) + str(abs(frac_part))
+        if frac_part < 0:
+            frac_str = "-" + frac_str
+        return fixNum(int_part, frac_str)
+
+    def power(self, n):
+        """
+        Raises this fixed-point number to integer power n.
+        Returns the result as a new fixNum object.
+        """
+        # get fractional parts as strings, padded with leading zeros
+        x2 = "0" * (self.b_original_len - len(str(abs(self.b)))) + str(abs(self.b))
+ 
+        DecLen = len(x2)
+        scale = 10 ** DecLen
+ 
+        # combine integer and fractional parts into one scaled integer
+        ScaledX = abs(self.a) * scale + int(x2)
+ 
+        # apply the sign
+        if self.a < 0 or (self.a == 0 and self.b < 0):
+            ScaledX = -ScaledX
+ 
+        PreOutput = ScaledX ** n
+        scale = scale ** n
+ 
+        # split back into integer and fractional parts
+        int_part = PreOutput // scale
+        remainder = PreOutput % scale
+ 
+        # handle negative results
+        if PreOutput < 0 and remainder != 0:
+            int_part += 1
+            frac_part = scale - remainder
+            if int_part == 0:
+                frac_part = -frac_part
+        else:
+            frac_part = remainder
+ 
+        frac_str = "0" * (len(str(scale)) - 1 - len(str(abs(frac_part)))) + str(abs(frac_part))
+        if frac_part < 0:
+            frac_str = "-" + frac_str
+        return fixNum(int_part, frac_str)
+
+
+def get_number():
+    """Asks the user to enter a number in form of a and b"""
+    while True:
+        try:
+            a = int(input("Enter the integer part (a): "))
+            b = input("Enter the fractional part (b): ")
+            int(b) # validate that b is a number
+
+            if a > 0:
+                b = b.lstrip('-')
+                
+            return fixNum(a, b)
+        except Exception as e:
+            print(f"Invalid input, an error occured: {e}. Enter numbers only.")
+
+def save_sum(num):
+    """Saves the current sum to a file (Fixed: using 'with' for safe file handling)"""
+    with open("sum.txt", "w") as f:
+        f.write(f"{num.a} {num.b} {num.b_original_len}")
+
+def get_sum():
+    """Retrieves the last sum from the file"""
+    try:
+        with open("sum.txt", "r") as f:
+            content = f.read().split()
+            if len(content) == 3:
+                a, b, DecLen = content
+                PreOutput = fixNum(int(a), b)
+                PreOutput.b_original_len = int(DecLen)
+                return PreOutput
+            elif len(content) == 2:
+                a, b = content
+                return fixNum(int(a), b)
+            else:
+                return fixNum(0, '0')
+    except FileNotFoundError:
+        return fixNum(0, '0')
+
+def menu():
+    """Main application loop"""
+    while True:
+        print("\n--- Fixed Point Calculator ---")
+        print("[a] Addition of numbers")
+        print("[b] Executing Power function")
+        print("[x] Quit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == 'a':
+            print("\nEnter the first number:")
+            n1 = get_number()
+            
+            while True:
+                print("\nEnter the second number:")
+                n2 = get_number()
+
+                result = n1.add(n2)
+                print(f"\n[Result] -> {result} (a = {result.a}, b = {result.b})")
+                
+                save_sum(result)
+                
+                cont = input("Continue adding to this sum? (y/n): ")
+                if cont.lower() != 'y':
+                    break
+                n1 = get_sum()
+                
+        elif choice == 'b':
+            num = get_number()
+            while True:
+                try:
+                    n = int(input("Enter the power: "))
+                    if n < 0:
+                        print("Invalid input. Enter an integer number >= 0.")
+                        continue
+                    break
+                except ValueError:
+                    print("Invalid input. Enter an integer number.")
+                    
+            result = num.power(n)
+            print(f"\n[Result] -> The result is {result}")
+            
+        elif choice == 'x':
+            print("Exiting application...")
+            break
+
+        else:
+            print("Invalid choice, please select 1, 2, or 3.")
+            continue
+
+menu()
