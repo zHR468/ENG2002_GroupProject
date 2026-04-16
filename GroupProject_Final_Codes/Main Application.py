@@ -1,4 +1,4 @@
-import FixnumModule
+from FixnumModule import fixNum
 
 def get_number():
     """Asks the user to enter a number in form of a and b"""
