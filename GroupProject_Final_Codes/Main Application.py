@@ -1,4 +1,6 @@
 from FixnumModule import fixNum
+from FractionModule import Fraction
+import math
 
 def get_number():
     """Asks the user to enter a number in form of a and b"""

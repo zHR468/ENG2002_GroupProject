@@ -1,3 +1,5 @@
+import math
+
 class fixNum:
  
     """
@@ -137,6 +139,7 @@ class fixNum:
         frac_str = "0" * (len(str(scale)) - 1 - len(str(abs(frac_part)))) + str(abs(frac_part))
         if frac_part < 0:
             frac_str = "-" + frac_str
+<<<<<<< HEAD
         return fixNum(int_part, frac_str)
 
     
@@ -206,3 +209,6 @@ class fixNum:
         exponent = fraconvert(exp_int, exp_frac)
         
         return base.__pow__(exponent)
+=======
+            return fixNum(int_part, frac_str)
+>>>>>>> caeee32 (Have fraction and fixnum as separate modules)
