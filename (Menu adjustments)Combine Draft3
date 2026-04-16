@@ -88,7 +88,7 @@ class fixNum:
  
         # handle negative results
         if PreOutput < 0 and remainder != 0:
-            int_part += 1
+            int_part += 1                        # integer division rounds down, add 1 to offset error
             frac_part = scale - remainder
             if int_part == 0:
                 frac_part = -frac_part
