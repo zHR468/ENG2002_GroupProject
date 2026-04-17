@@ -1,9 +1,13 @@
+
+
+
+
 from menu import fixNum
 def get_number():
     """
-    docstring needed here
     this part asks the user to enter a number in form of a and b and
     validates that a is an integer and b can be converted into an integer
+    instantiates an object of the fixnum class
     """
     #loop runs until correct a and b are entered
     while True:
@@ -19,6 +23,10 @@ def get_number():
             return fixNum(a,b)
         except Exception as e:
             print(f"Invalid input, and error occured {e}. Enter numbers only")
+
+
+
+
 
 def save_sum(num):
     """

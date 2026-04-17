@@ -122,7 +122,7 @@ class fixNum:
         if n == 0:
             return fixNum(1, "0")
 
-        # n > 0
+        # n is positive
         if n > 0:
             num = base ** n
             den = 10 ** (k * n)
@@ -141,7 +141,7 @@ class fixNum:
         else:
             abs_n = abs(n)
 
-            precision = 2
+            precision = k
 
             num = (10 ** (k * abs_n)) * (10 ** precision)
             den = base ** abs_n
