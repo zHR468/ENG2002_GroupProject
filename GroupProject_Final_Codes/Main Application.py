@@ -25,7 +25,8 @@ def save_sum(num):
         f.write(f"{num.a} {num.b} {num.b_original_len}")
 
 def get_sum():
-    """Retrieves the last sum from the file"""
+    """Retrieves the last sum from the file
+    splits the read line into a and b and instantiates then to create a fixnum object"""
     try:
         with open("sum.txt", "r") as f:
             content = f.read().split()
