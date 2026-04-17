@@ -95,7 +95,7 @@ def menu():
             result = fixed_pow(base_num.a, str(base_num.b), exp_num.a, str(exp_num.b))
             if isinstance(result, tuple):
                 print(f"Result is -> {result[0]}  {result[1]}")
-                print(f"Estimation is -> {int(result[0]/result[1])**(d)}")
+                print(f"Estimation is -> {int(result[0].num/result[0].den)**(1/int(fraconvert(exp_num.a, str(exp_num.b)).den))}")
             else:
                 print(f"Result is -> {result}")
                 
