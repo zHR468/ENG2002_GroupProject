@@ -107,51 +107,59 @@ class fixNum:
         Raises the fixed-point number to power n.
         """
 
-        if self.a == 0 and int(self.b.lstrip('-')) == 0:
+        if self.a == 0 and int(self.b.lstrip('-')) == 0:#checks if number is 0. we cannot raise 0 to any power
             return "Error: 0 cannot be raised to any power"
 
-        k = len(str(self.b).lstrip('-'))
-        is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
+        k = len(str(self.b).lstrip('-'))# k is the length of b, the number of decimal places in the fixed-point number
+        is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))#we check if the original number is negative
 
-        clean_b = str(self.b).lstrip('-')
-        base = int(str(abs(self.a)) + clean_b)
+        clean_b = str(self.b).lstrip('-')#we remove the negative sign from the decimal part for clean combination
+        base = int(str(abs(self.a)) + clean_b)#we combine a and b into a single integer (we flatten it) eg 2.16 becomes 216
 
-        if is_negative:
+        if is_negative:#apply the negative sign if the number was initially a negative
             base *= -1
 
-        if n == 0:
+        if n == 0:#any number raised to the power of 0 is 1
             return fixNum(1, "0")
 
-        # n is positive
+        # n is a positive power
         if n > 0:
-            num = base ** n
-            den = 10 ** (k * n)
-            final_len = k * n
+            num = base ** n#we raise the base to power n
+            den = 10 ** (k * n)#scaling factor to restore decimal places
+            final_len = k * n #number of decimal places in the final answer
 
-            new_a = num // den
+           # we split the number into integer a and decimal part b by using floor division and modulo respectively
+            new_a = num // den 
             new_b = abs(num % den)
 
+            #we convert the fractional part back into a string to handle leading 0s if needed
             new_b_str = str(new_b)
+            #we add leading 0s if the new length of new_b is less than final_len
             while len(new_b_str) < final_len:
                 new_b_str = '0' + new_b_str
 
             return fixNum(new_a, new_b_str)
 
-        # n < 0
+        # n is a negative power
         else:
-            abs_n = abs(n)
+            abs_n = abs(n)#convert n to positive
 
-            precision = k
+            precision = k#controls the number of decimal places in the result
 
+            #we scale the numerator to prevent the result from becoming 0
             num = (10 ** (k * abs_n)) * (10 ** precision)
+            #the denominator is the base raised to the absolute power n
             den = base ** abs_n
 
-            total_result = num // den
+            total_result = num // den#we perform integer division
 
+            #we split the result into the inegral part a and the decimal part b
             new_a = total_result // (10 ** precision)
             new_b = total_result % (10 ** precision)
 
+            #we convert the fractional part back into a string to handle leading 0s if needed
             new_b_str = str(new_b)
+            #we add leading 0s if the new length of new_b is less than precision
             while len(new_b_str) < precision:
                 new_b_str = '0' + new_b_str
 
