@@ -1,4 +1,5 @@
-from FixnumModule import fixNum
+#from FixnumModule import fixNum
+from LavisseandYoubinspart import fixNum
 from FractionModule import Fraction
 import math
 
