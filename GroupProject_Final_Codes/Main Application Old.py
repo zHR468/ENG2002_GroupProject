@@ -1,8 +1,6 @@
 from FixnumModule import fixNum
 #from LavisseandYoubinspart import fixNum
 from FractionModule import Fraction
-from FractionModule import fixed_pow
-from FractionModule import fraconvert 
 import math
 
 def get_number():
@@ -48,8 +46,7 @@ def menu():
     while True:
         print("\n--- Fixed Point Calculator ---")
         print("[a] Addition of numbers")
-        print("[b] Executing Integer-based Power Function")
-        print("[c] Executing Fractional Power Function")
+        print("[b] Executing Power function")
         print("[x] Quit")
         
         choice = input("Enter your choice: ")
@@ -83,24 +80,6 @@ def menu():
                     
             result = num.power(n)
             print(f"\n[Result] -> The result is {result}")
-
-        elif choice=='c':
-            print("\n --- Fractional Power Mode ---")
-            print("Enter base: ")
-            base_num = get_number()
-
-            print("Enter the exponent (fractional): ")
-            exp_num= get_number()
-            
-            result = fixed_pow(base_num.a, str(base_num.b), exp_num.a, str(exp_num.b))
-            if isinstance(result, tuple):
-                print(f"Result is -> {result[0]}  {result[1]}")
-                print(f"Estimation is -> {int(result[0].num/result[0].den)**(1/int(fraconvert(exp_num.a, str(exp_num.b)).den))}")
-            else:
-                print(f"Result is -> {result}")
-                
-            
-                    
             
         elif choice == 'x':
             print("Exiting application...")
