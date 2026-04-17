@@ -110,10 +110,10 @@ class fixNum:
         if self.a == 0 and int(self.b.lstrip('-')) == 0:
             return "Error: 0 cannot be raised to any power"
 
-        k = len(self.b.lstrip('-'))
+        k = len(str(self.b).lstrip('-'))
         is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
 
-        clean_b = self.b.lstrip('-')
+        clean_b = str(self.b).lstrip('-')
         base = int(str(abs(self.a)) + clean_b)
 
         if is_negative:
