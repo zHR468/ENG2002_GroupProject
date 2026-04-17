@@ -6,41 +6,42 @@ import math
 
 def get_number():
     """Asks the user to enter a number in form of a and b"""
-    while True:
+    while True:#loop runs until valid input is entered. 
         try:
-            a = int(input("Enter the integer part (a): "))
-            b = input("Enter the fractional part (b): ")
-            int(b) # validate that b is a number
+            a = int(input("Enter the integer part (a): "))#a is an integer
+            b = input("Enter the fractional part (b): ")# fractional part is maintained as a string
+            int(b) # validate that b can be converted into an integer
 
-            if a > 0:
+            if a > 0:#if a is positive, b must be negative
                 b = b.lstrip('-')
                 
-            return fixNum(a, b)
+            return fixNum(a, b)#returns a fixNum object and exits the loop and function
         except Exception as e:
-            print(f"Invalid input, an error occured: {e}. Enter numbers only.")
+            print(f"Invalid input, an error occured: {e}. Enter numbers only.")#prompts user again when invalid input is entered
 
 def save_sum(num):
-    """Saves the current sum to a file (Fixed: using 'with' for safe file handling)"""
-    with open("sum.txt", "w") as f:
-        f.write(f"{num.a} {num.b} {num.b_original_len}")
+    """
+    docstring needed here
+    creates a file and writes the sum in it to enable user add new numbers to this sum
+    """
+    f = open("sum.txt","w")
+    #writes the a and b parts of the calculated sum into the file
+    f.write(f"{num.a} {num.b}")
+    f.close()
 
 def get_sum():
-    """Retrieves the last sum from the file"""
+    """
+    docstring needed here
+    """
     try:
-        with open("sum.txt", "r") as f:
-            content = f.read().split()
-            if len(content) == 3:
-                a, b, DecLen = content
-                PreOutput = fixNum(int(a), b)
-                PreOutput.b_original_len = int(DecLen)
-                return PreOutput
-            elif len(content) == 2:
-                a, b = content
-                return fixNum(int(a), b)
-            else:
-                return fixNum(0, '0')
+        f = open("sum.txt","r")
+        #assigns val
+        a,b = f.read().split()
+        f.close()
+    
+        return fixNum(int(a),b)
     except FileNotFoundError:
-        return fixNum(0, '0')
+        return fixNum(0,'0')
 
 def menu():
     """Main application loop"""
