@@ -58,8 +58,15 @@ class fixNum:
         """
         Adds this fixed-point number with another fixed-point number.
         Returns the result as a new fixNum object.
+
+        Parameters:
+        fixNum object self
+        fixNum object other
+
+        Returns:
+        fixNum(int_part, frac_str): fixNum object representing a fixed-point number
         """
-        # get fractional parts as strings, padded with leading zeros
+        # get fractional parts as strings, padded with leading zeros that were lost during __init__
         x2 = "0" * (self.b_original_len - len(str(abs(self.b)))) + str(abs(self.b))
         y2 = "0" * (other.b_original_len - len(str(abs(other.b)))) + str(abs(other.b))
  
@@ -91,7 +98,7 @@ class fixNum:
         # handle negative results
         if PreOutput < 0 and remainder != 0:
             int_part += 1                        # integer division rounds down, add 1 to offset error
-            frac_part = scale - remainder
+            frac_part = scale - remainder        # modulus is affected as well
             if int_part == 0:
                 frac_part = -frac_part
         else:

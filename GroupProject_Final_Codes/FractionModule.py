@@ -52,6 +52,12 @@ def fraconvert(int_part, frac_str):
     '''
     Converts a fixed-point number into fractions
 
+    Parameters:
+    int_part (int): integer part of number
+    frac_str (str): fractional part of number
+
+    Returns:
+    Fraction(num, scale): Fraction object representing a rational number
     '''
     scale = 10**len(frac_str)
     if int_part >= 0:
