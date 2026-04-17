@@ -74,9 +74,6 @@ def menu():
             while True:
                 try:
                     n = int(input("Enter the power: "))
-                    #if n < 0:
-                    #    print("Invalid input. Enter an integer number >= 0.")
-                    #    continue
                     break
                 except ValueError:
                     print("Invalid input. Enter an integer number.")
