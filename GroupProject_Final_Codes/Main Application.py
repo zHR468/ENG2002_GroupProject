@@ -21,26 +21,30 @@ def get_number():
 
 def save_sum(num):
     """
-    docstring needed here
-    creates a file and writes the sum in it to enable user add new numbers to this sum
+    Saves the results into a text file 'sum.txt'
+    Allows user to continue adding numbers to previous result by saving previous result
+    the file is overwritten every time with the latest result
     """
-    f = open("sum.txt","w")
-    #writes the a and b parts of the calculated sum into the file
+    f = open("sum.txt","w")#opens file in write mode and overwrites previous content
+    #writes the a and b parts of the calculated sum into the file separated by a space
     f.write(f"{num.a} {num.b}")
-    f.close()
+    f.close()#closes the file to save changes
 
 def get_sum():
     """
-    docstring needed here
+    reads previously saved result from sum.txt
+    Allows cummulative addition by retrieving the last stored result
+    Returns a fixNum object from the file data
+    if the file does not exist, return a default value of 0.0 instead of crashing
     """
     try:
-        f = open("sum.txt","r")
-        #assigns val
+        f = open("sum.txt","r")#opens the file in read mode
+        #assigns stored values to a and b after splitting along the space that separates them
         a,b = f.read().split()
         f.close()
     
         return fixNum(int(a),b)
-    except FileNotFoundError:
+    except FileNotFoundError:#if the file does not exist, return a default value of 0.0 instead of crashing
         return fixNum(0,'0')
 
 def menu():
