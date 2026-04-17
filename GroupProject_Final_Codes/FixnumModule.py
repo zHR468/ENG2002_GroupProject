@@ -100,7 +100,7 @@ class fixNum:
             frac_str = "-" + frac_str
         return fixNum(int_part, frac_str)
 
-     def power(self, n):
+    def power(self, n):
         """
         Raises this fixed-point number to integer power n.
         Returns the result as a new fixNum object.
