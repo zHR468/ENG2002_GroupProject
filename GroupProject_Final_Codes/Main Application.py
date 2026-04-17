@@ -56,7 +56,7 @@ def menu():
         print("[c] Executing Fractional Power Function")
         print("[x] Quit")
         
-        choice = input("Enter your choice: ")
+        choice = input("Enter your choice: ").lower()
         
         if choice == 'a':
             print("\nEnter the first number:")
