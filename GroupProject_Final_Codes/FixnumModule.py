@@ -104,39 +104,55 @@ class fixNum:
 
     def power(self, n):
         """
-        Raises this fixed-point number to integer power n.
-        Returns the result as a new fixNum object.
+        Raises the fixed-point number to power n.
         """
-        # get fractional parts as strings, padded with leading zeros
-        x2 = "0" * (self.b_original_len - len(str(abs(self.b)))) + str(abs(self.b))
- 
-        DecLen = len(x2)
-        scale = 10 ** DecLen
- 
-        # combine integer and fractional parts into one scaled integer
-        ScaledX = abs(self.a) * scale + int(x2)
- 
-        # apply the sign
-        if self.a < 0 or (self.a == 0 and self.b < 0):
-            ScaledX = -ScaledX
- 
-        PreOutput = ScaledX ** n
-        scale = scale ** n
- 
-        # split back into integer and fractional parts
-        int_part = PreOutput // scale
-        remainder = PreOutput % scale
- 
-        # handle negative results
-        if PreOutput < 0 and remainder != 0:
-            int_part += 1
-            frac_part = scale - remainder
-            if int_part == 0:
-                frac_part = -frac_part
+
+        if self.a == 0 and int(self.b.lstrip('-')) == 0:
+            return "Error: 0 cannot be raised to any power"
+
+        k = len(self.b.lstrip('-'))
+        is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))
+
+        clean_b = self.b.lstrip('-')
+        base = int(str(abs(self.a)) + clean_b)
+
+        if is_negative:
+            base *= -1
+
+        if n == 0:
+            return fixNum(1, "0")
+
+        # n > 0
+        if n > 0:
+            num = base ** n
+            den = 10 ** (k * n)
+            final_len = k * n
+
+            new_a = num // den
+            new_b = abs(num % den)
+
+            new_b_str = str(new_b)
+            while len(new_b_str) < final_len:
+                new_b_str = '0' + new_b_str
+
+            return fixNum(new_a, new_b_str)
+
+        # n < 0
         else:
-            frac_part = remainder
- 
-        frac_str = "0" * (len(str(scale)) - 1 - len(str(abs(frac_part)))) + str(abs(frac_part))
-        if frac_part < 0:
-            frac_str = "-" + frac_str
-        return fixNum(int_part, frac_str)
+            abs_n = abs(n)
+
+            precision = 2
+
+            num = (10 ** (k * abs_n)) * (10 ** precision)
+            den = base ** abs_n
+
+            total_result = num // den
+
+            new_a = total_result // (10 ** precision)
+            new_b = total_result % (10 ** precision)
+
+            new_b_str = str(new_b)
+            while len(new_b_str) < precision:
+                new_b_str = '0' + new_b_str
+
+            return fixNum(new_a, new_b_str)
