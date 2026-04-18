@@ -8,7 +8,9 @@ from FractionModule import fraconvert
 import math
 
 def get_number():
-    """Asks the user to enter a number in form of a and b"""
+    """Asks the user to enter a number in form of a and b
+    uses try except to ensure that the user enters valid input without crashing the program
+    a while loop is used until the correct input is entered"""
     while True:#loop runs until valid input is entered. 
         try:
             a = int(input("Enter the integer part (a): "))#a is an integer
