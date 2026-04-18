@@ -118,11 +118,11 @@ class fixNum:
             frac_part = scale - remainder        # Fix modulus result when input is negative, eg. -1 mod 1000 gives 999, but we want it to represent -0.001, so we take the complement to get the correct fractional part
             if int_part == 0:
                 frac_part = -frac_part           # if integer part is 0, it cannot keep the negative sign, hand over to frac_part instead
-        else:
+        else: # for non-negative results, the remainder is already correct
             frac_part = remainder
  
-        frac_str = "0" * (DecLen - len(str(abs(frac_part)))) + str(abs(frac_part))
-        if frac_part < 0:
+        frac_str = "0" * (DecLen - len(str(abs(frac_part)))) + str(abs(frac_part)) # convert fractional part back to string and recover leading zeros if needed
+        if frac_part < 0:        # if the fractional part is negative, we need to add the negative sign back to the string
             frac_str = "-" + frac_str
         return fixNum(int_part, frac_str)#result is then returned
 
