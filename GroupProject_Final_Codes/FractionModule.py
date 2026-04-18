@@ -1,3 +1,6 @@
+"""
+BIRUNGI MARY GORETTI ABWOOLI - 25100607D
+"""
 import math
 
 class Fraction: 
@@ -5,7 +8,7 @@ class Fraction:
             raise ZeroDivisionError("Denominator cannot be zero")
 
         
-        # Step 2: Auto-Simplification for root definition
+        # Auto-Simplification for root definition
         # Utilizes math.gcd to help maintain accuracy without forced truncation.
         # This defines the exact intended root (e.g., 6th power, 5th root).
     
@@ -42,7 +45,7 @@ class Fraction:
                 # negative integer exponent: reciprocal
                 return Fraction(self.den**(-n), self.num**(-n))
         else:
-            # Step 3: Root Management & Symbolic Output
+            #  Root Management & Symbolic Output
             # Isolates the root and outputs it as a clean, symbolic string.
             # This helps mitigate non-terminating decimals and avoids floating-point estimation.            n = exp.num
             d = exp.den
@@ -64,7 +67,7 @@ def fraconvert(int_part, frac_str):
     Returns:
     Fraction(num, scale): Fraction object representing a rational number
     '''
-    # Step 1: Pure Algebraic Conversion
+    # Pure Algebraic Conversion
     # Scales the decimal to create an exact, error-free initial fraction.
     # Aims to preserve the original structural precision of the complex decimal before operations.
     scale = 10**len(frac_str)
