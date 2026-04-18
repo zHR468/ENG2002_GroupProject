@@ -168,7 +168,7 @@ class fixNum:
         else:
             abs_n = abs(n)#convert n to positive
 
-            precision = k#controls the number of decimal places in the result
+            precision = max(k*abs_n,5)#controls the number of decimal places in the result
 
             #we scale the numerator to prevent the result from becoming 0
             num = (10 ** (k * abs_n)) * (10 ** precision)
