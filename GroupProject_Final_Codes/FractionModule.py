@@ -11,7 +11,7 @@ dealing with fractional exponents (which fundamentally require calculating roots
 Directly computing decimal roots leads to infinite floating-point inaccuracies. 
 
 This module was designed as a distinction-grade extension to translate fixed-point 
-numbers into pure fractions. By utilizing math.gcd and symbolic string outputs, 
+numbers into pure fractions and calculate fractional powers. By utilizing math.gcd from the maths module and symbolic string outputs, 
 it allows the system to accurately process complex decimal powers with absolute 
 zero precision loss.
 """
