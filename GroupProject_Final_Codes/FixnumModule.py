@@ -5,12 +5,12 @@ ELIF IREM TANIR(25088642d)
 LI YUEN KIK (25087058D) - LAVISSE
 HE YOUBIN(25091865D)
 Purpose: 
-Standard floating-point arithmetic introduces microscopic inaccuracies due to 
-binary representation limits in computer architecture. This module engineers a 
-rigorous fixed-point data structure. By decoupling the integer and fractional 
+Standard floating-point arithmetic introduces some inaccuracies due to 
+binary representation limits for floating point numbers in computer architecture. This module creates a 
+rigorous fixed-point data structure to prevent this errors. By decomposing the integer and fractional 
 components and storing both strictly as pure integers, we bypass standard float 
 limitations. The system utilizes dynamic scaling factors and structural memory 
-to achieve mathematically lossless arithmetic operations (Addition and Power).
+to achieve mathematically lossless arithmetic operations during Addition and Exponentiation for integer powers.
 """
 import math
 
