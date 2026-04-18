@@ -86,5 +86,3 @@ def fixed_pow(base_int, base_frac, exp_int, exp_frac):
     
     # Execute the power logic with stable symbolic root management
     return base.__pow__(exponent)
-    
-    return base.__pow__(exponent)
