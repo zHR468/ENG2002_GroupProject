@@ -4,8 +4,13 @@ MARY GORETTI ABWOOLI BIRUNGI (25100607D)
 ELIF IREM TANIR(25088642d)
 LI YUEN KIK (25087058D) - LAVISSE
 HE YOUBIN(25091865D)
-This program has the fixnum class that provides methods for handling addition for fixed point numbers
-It also has a method for handling exponentiation of a fixed point number to an integer value
+Purpose: 
+Standard floating-point arithmetic introduces microscopic inaccuracies due to 
+binary representation limits in computer architecture. This module engineers a 
+rigorous fixed-point data structure. By decoupling the integer and fractional 
+components and storing both strictly as pure integers, we bypass standard float 
+limitations. The system utilizes dynamic scaling factors and structural memory 
+to achieve mathematically lossless arithmetic operations (Addition and Power).
 """
 import math
 
@@ -31,12 +36,14 @@ class fixNum:
         
         
         #remove the extra zeros that do not need
+        #Prevent empty strings or standalone minus signs from breaking conversion
         b_len_start = b_len_start.rstrip('0')
         if b_len_start == "" or b_len_start == "-":
 
             b_len_start += "0"
 
-
+        # Record the exact decimal length.
+        # If negative, we subtract 1 to mathematically ignore the '-' icon.
         if b_len_start[0] == "-":
             self.b_original_len = len(b_len_start) - 1
         else:
@@ -46,7 +53,8 @@ class fixNum:
         self.a = int(a)
         self.b = int(b_len_start)
  
-        # In the assignment: if a is non-zero, b must be positive.
+        # If the integer part (a) is non-zero, 
+        # the fractional part (b) must be mathematically stored as absolute (positive).
         if self.a != 0:
             self.b = abs(self.b)
         
