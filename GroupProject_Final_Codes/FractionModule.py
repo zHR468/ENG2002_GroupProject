@@ -48,7 +48,8 @@ class Fraction:
         else:
             #  Root Management & Symbolic Output
             # Isolates the root and outputs it as a clean, symbolic string.
-            # This helps mitigate non-terminating decimals and avoids floating-point estimation.            n = exp.num
+            # This helps mitigate non-terminating decimals and avoids floating-point estimation.
+            n = exp.num
             d = exp.den
             if n >= 0:
                 return (Fraction(self.num**n, self.den**n),"to the power of 1/{}".format(d))
