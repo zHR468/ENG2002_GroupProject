@@ -4,6 +4,8 @@ MARY GORETTI ABWOOLI BIRUNGI (25100607D)
 ELIF IREM TANIR(25088642d)
 LI YUEN KIK (25087058D) - LAVISSE
 HE YOUBIN(25091865D)
+This program has the fixnum class that provides methods for handling addition for fixed point numbers
+It also has a method for handling exponentiation of a fixed point number to an integer value
 """
 import math
 
@@ -77,7 +79,7 @@ class fixNum:
         x2 = "0" * (self.b_original_len - len(str(abs(self.b)))) + str(abs(self.b))
         y2 = "0" * (other.b_original_len - len(str(abs(other.b)))) + str(abs(other.b))
  
-        # match decimal places by adding zeros to the shorter one
+        # match decimal places by adding trailing zeros to the shorter one
         while len(x2) < len(y2):
             x2 += "0"
         while len(x2) > len(y2):
@@ -114,7 +116,7 @@ class fixNum:
         frac_str = "0" * (DecLen - len(str(abs(frac_part)))) + str(abs(frac_part))
         if frac_part < 0:
             frac_str = "-" + frac_str
-        return fixNum(int_part, frac_str)
+        return fixNum(int_part, frac_str)#result is then returned
 
     def power(self, n):
         """
@@ -152,7 +154,7 @@ class fixNum:
             while len(new_b_str) < final_len:
                 new_b_str = '0' + new_b_str
 
-            return fixNum(new_a, new_b_str)
+            return fixNum(new_a, new_b_str)#result is then returned
 
         # n is a negative power
         else:
@@ -177,4 +179,4 @@ class fixNum:
             while len(new_b_str) < precision:
                 new_b_str = '0' + new_b_str
 
-            return fixNum(new_a, new_b_str)
+            return fixNum(new_a, new_b_str)#result is then returned
