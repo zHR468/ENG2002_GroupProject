@@ -85,8 +85,8 @@ class fixNum:
         while len(x2) > len(y2):
             y2 += "0"
  
-        DecLen = len(x2)
-        scale = 10 ** DecLen
+        DecLen = len(x2)                 # number of decimal places (after padding)
+        scale = 10 ** DecLen             # scaling factor to convert the fixed-point numbers into integers for addition
  
         # combine integer and fractional parts into one scaled integer
         ScaledX = abs(self.a) * scale + int(x2)
@@ -104,10 +104,10 @@ class fixNum:
         int_part = PreOutput // scale
         remainder = PreOutput % scale
  
-        # handle negative results
+        # Since integer division rounds towards negative infinity, results need to be adjusted if PreOutput is negative
         if PreOutput < 0 and remainder != 0:
             int_part += 1                        # integer division rounds down, add 1 to offset error
-            frac_part = scale - remainder        # modulus is affected as well
+            frac_part = scale - remainder        # Fix modulus result when input is negative
             if int_part == 0:
                 frac_part = -frac_part
         else:
