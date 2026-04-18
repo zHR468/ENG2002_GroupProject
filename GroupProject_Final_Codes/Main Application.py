@@ -54,69 +54,69 @@ def get_sum():
 
 def menu():
     """Main application loop"""
-    while True:
+    while True:#Continuous loop
         print("\n--- Fixed Point Calculator ---")
         print("[a] Addition of numbers")
         print("[b] Executing Integer-based Power Function")
         print("[c] Executing Fractional Power Function")
         print("[x] Quit")
+        #Menu is printed as above
+        choice = input("Enter your choice: ").lower()#The choice of the user is asked
         
-        choice = input("Enter your choice: ").lower()
-        
-        if choice == 'a':
+        if choice == 'a': #Addition function for two fixed numbers
             print("\nEnter the first number:")
-            n1 = get_number()
+            n1 = get_number()# By using get_number function it retrieves the first number
             
             while True:
                 print("\nEnter the second number:")
-                n2 = get_number()
+                n2 = get_number()# By using get_number once again, receives the second nummber from the user
 
-                result = n1.add(n2)
+                result = n1.add(n2)#Adds the number 
                 print(f"\n[Result] -> {result} (a = {result.a}, b = {result.b})")
                 
-                save_sum(result)
+                save_sum(result)# Saves the result into the results.txt file for further need
                 
-                cont = input("Continue adding to this sum? (y/n): ")
-                if cont.lower() != 'y':
+                cont = input("Continue adding to this sum? (y/n): ")#Asks user if they would like to add the current addition into the sum for further use
+                if cont.lower() != 'y':#If no, then the algorithm breaks 
                     break
-                n1 = get_sum()
+                n1 = get_sum()#Gives the sum as a result
                 
-        elif choice == 'b':
-            num = get_number()
+        elif choice == 'b':#Power function where the power are consist of integers
+            num = get_number()# Get base number by using get_number function
             while True:
                 try:
-                    n = int(input("Enter the power: "))
+                    n = int(input("Enter the power: "))#Gets the integer power
                     break
-                except ValueError:
+                except ValueError:#In case of a wrong input exist in power entry, the algorithm raises error. 
                     print("Invalid input. Enter an integer number.")
                     
-            result = num.power(n)
+            result = num.power(n)# Calculate power by using power method defined in the fixNum class
             print(f"\n[Result] -> The result is {result}")
 
-        elif choice=='c':
+        elif choice=='c':#Fractional Power mode
             print("\n --- Fractional Power Mode ---")
             print("Enter base: ")
-            base_num = get_number()
+            base_num = get_number()#Get the base by using get_number function from Fixnum Class
 
             print("Enter the exponent (fractional): ")
-            exp_num= get_number()
+            exp_num= get_number()#Gets the fractional exponent
             
-            result = fixed_pow(base_num.a, str(base_num.b), exp_num.a, str(exp_num.b))
-            if isinstance(result, tuple):
-                print(f"Result is -> {result[0]}  {result[1]}")
-                print(f"Estimation is -> {int(result[0].num/result[0].den)**(1/int(fraconvert(exp_num.a, str(exp_num.b)).den))}")
-            else:
-                print(f"Result is -> {result}")
+            result = fixed_pow(base_num.a, str(base_num.b), exp_num.a, str(exp_num.b)) #Calculates fractional power by using power() function from Fraction Class which makes base.b and exp.b as strings for result
+            if isinstance(result, tuple):#The result is retrieved as tuple
+                print(f"Result is -> {result[0]}  {result[1]}")#The exact value division is the output
+                print(f"Estimation is -> {int(result[0].num/result[0].den)**(1/int(fraconvert(exp_num.a, str(exp_num.b)).den))}")#Provides an estimation where exact value division is a long number and output is a float-point numnber.
+            else:#If result is a single value
+                print(f"Result is -> {result}")#
                 
             
                     
             
-        elif choice == 'x':
+        elif choice == 'x':#Quit 
             print("Exiting application...")
-            break
+            break #Breaks the loop and quits
 
-        else:
+        else:# In case of wrong input entry the algorithm raises error and redirects to the menu for correct choice
             print("Invalid choice, please select a, b, or c or x.")
             
-
+#Menu starts from here.
 menu()
