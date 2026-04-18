@@ -1,3 +1,6 @@
+"""
+BIRUNGI MARY GORETTI ABWOOLI - 25100607D
+"""
 from FixnumModule import fixNum
 from FractionModule import Fraction
 from FractionModule import fixed_pow

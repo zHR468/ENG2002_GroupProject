@@ -1,3 +1,6 @@
+"""
+BIRUNGI MARY GORETTI ABWOOLI - 25100607D
+"""
 import math
 
 class fixNum:
@@ -111,7 +114,7 @@ class fixNum:
 
     def power(self, n):
         """
-        Raises the fixed-point number to power n.
+        Raises the fixed-point number to integer power n.
         """
 
         if self.a == 0 and int(self.b.lstrip('-')) == 0:#checks if number is 0. we cannot raise 0 to any power
