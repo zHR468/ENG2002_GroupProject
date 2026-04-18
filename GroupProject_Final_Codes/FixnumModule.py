@@ -117,11 +117,11 @@ class fixNum:
         Raises the fixed-point number to integer power n.
         """
 
-        if self.a == 0 and int(self.b.lstrip('-')) == 0:#checks if number is 0. we cannot raise 0 to any power
+        if self.a == 0 and int(str(self.b).lstrip('-')) == 0:#checks if number is 0. we cannot raise 0 to any power
             return "Error: 0 cannot be raised to any power"
 
         k = len(str(self.b).lstrip('-'))# k is the length of b, the number of decimal places in the fixed-point number
-        is_negative = (self.a < 0) or (self.a == 0 and self.b.startswith('-'))#we check if the original number is negative
+        is_negative = (self.a < 0) or (self.a == 0 and str(self.b).startswith('-'))#we check if the original number is negative
 
         clean_b = str(self.b).lstrip('-')#we remove the negative sign from the decimal part for clean combination
         base = int(str(abs(self.a)) + clean_b)#we combine a and b into a single integer (we flatten it) eg 2.16 becomes 216
