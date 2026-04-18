@@ -117,7 +117,7 @@ class fixNum:
             int_part += 1                        # integer division rounds down, add 1 to offset error
             frac_part = scale - remainder        # Fix modulus result when input is negative, eg. -1 mod 1000 gives 999, but we want it to represent -0.001, so we take the complement to get the correct fractional part
             if int_part == 0:
-                frac_part = -frac_part
+                frac_part = -frac_part           # if integer part is 0, it cannot keep the negative sign, hand over to frac_part instead
         else:
             frac_part = remainder
  
