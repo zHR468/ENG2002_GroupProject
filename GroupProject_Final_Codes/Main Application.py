@@ -1,5 +1,14 @@
 """
-BIRUNGI MARY GORETTI ABWOOLI - 25100607D
+prepared by :
+MARY GORETTI ABWOOLI BIRUNGI (25100607D)
+ELIF IREM TANIR(25088642d)
+LI YUEN KIK (25087058D) - LAVISSE
+HE YOUBIN(25091865D)
+This code imports methods of the fixNum class from the FixNumModule module and methods from the Fraction class in the FractionModule module
+This code allows the user to carry out additions of positive numbers, negative numbers and numbers with mixed signs. 
+It also allows the user to raise a number to any power
+This program allows a user to perform cumulative additions by saving the last sum in a text file and retriving it for addition.
+The kind of operation is determined by the user's input and the program is also terminated by the user according to their input
 """
 from FixnumModule import fixNum
 from FractionModule import Fraction
@@ -53,7 +62,8 @@ def get_sum():
         return fixNum(0,'0')
 
 def menu():
-    """Main application loop"""
+    """This function enables the program to interact with the user. 
+    It asks for user input then calls functions and methods to perform calculations based on the user's input"""
     while True:#Continuous loop
         print("\n--- Fixed Point Calculator ---")
         print("[a] Addition of numbers")
@@ -61,42 +71,42 @@ def menu():
         print("[c] Executing Fractional Power Function")
         print("[x] Quit")
         #Menu is printed as above
-        choice = input("Enter your choice: ").lower()#The choice of the user is asked
+        choice = input("Enter your choice: ").lower()#The choice of the user is asked and is converted to lower case in order to accept uppercase inputs too
         
         if choice == 'a': #Addition function for two fixed numbers
             print("\nEnter the first number:")
-            n1 = get_number()# By using get_number function it retrieves the first number
+            n1 = get_number()# calls the input function to create the first fixNum object
             
-            while True:
+            while True:#loop allows cumulative addition
                 print("\nEnter the second number:")
-                n2 = get_number()# By using get_number once again, receives the second nummber from the user
+                n2 = get_number()# receives the second nummber from the user
 
-                result = n1.add(n2)#Adds the number 
-                print(f"\n[Result] -> {result} (a = {result.a}, b = {result.b})")
+                result = n1.add(n2)#calls the add() method and adds the 2 numbers 
+                print(f"\n[Result] -> {result} (a = {result.a}, b = {result.b})")#displays the result in a.b format and also a and b separately
                 
-                save_sum(result)# Saves the result into the results.txt file for further need
+                save_sum(result)# Saves the result into the results.txt file for future need
                 
-                cont = input("Continue adding to this sum? (y/n): ")#Asks user if they would like to add the current addition into the sum for further use
-                if cont.lower() != 'y':#If no, then the algorithm breaks 
+                cont = input("Continue adding to this sum? (y/n): ")#Asks user if they would like to perform cumulative addition
+                if cont.lower() != 'y':#If no, then the internal while loop breaks 
                     break
-                n1 = get_sum()#Gives the sum as a result
+                n1 = get_sum()#Gets the last saved result from the text file to continue addition if the loop isn't exited
                 
         elif choice == 'b':#Power function where the power are consist of integers
-            num = get_number()# Get base number by using get_number function
-            while True:
+            num = get_number()# Get base number from user by using get_number function
+            while True:#loop ensures valid integer n is entered
                 try:
                     n = int(input("Enter the power: "))#Gets the integer power
-                    break
-                except ValueError:#In case of a wrong input exist in power entry, the algorithm raises error. 
+                    break#exit loop once valid input is entered
+                except ValueError:#In case of a wrong input exist in power entry, the program doesn't crash, instead message is printed and loop continues. 
                     print("Invalid input. Enter an integer number.")
                     
-            result = num.power(n)# Calculate power by using power method defined in the fixNum class
-            print(f"\n[Result] -> The result is {result}")
+            result = num.power(n)# Calculate power by using power() method defined in the fixNum class
+            print(f"\n[Result] -> The result is {result}")#result is displayed
 
         elif choice=='c':#Fractional Power mode
             print("\n --- Fractional Power Mode ---")
             print("Enter base: ")
-            base_num = get_number()#Get the base by using get_number function from Fixnum Class
+            base_num = get_number()#Get the base by using get_number function 
 
             print("Enter the exponent (fractional): ")
             exp_num= get_number()#Gets the fractional exponent
@@ -118,5 +128,5 @@ def menu():
         else:# In case of wrong input entry the algorithm raises error and redirects to the menu for correct choice
             print("Invalid choice, please select a, b, or c or x.")
             
-#Menu starts from here.
+#Program execution starts from here.
 menu()
