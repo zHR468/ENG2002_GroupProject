@@ -107,6 +107,7 @@ def menu():
                 print(f"Estimation is -> {(int(result[0].num/result[0].den))**(1/int(result[1].lstrip('to the power of 1/')))}")#Provides an estimation where exact value division is a long number and output is a float-point numnber.
                 print(result[0].num/result[0].den)
                 print(1/int(result[1].lstrip('to the power of 1/')))
+                print((result[0].num/result[0].den)**(1/int(result[1].lstrip('to the power of 1/'))))
             else:#If result is a single value
                 print(f"Result is -> {result}")#
                 
