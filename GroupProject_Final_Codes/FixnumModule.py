@@ -12,7 +12,7 @@ components and storing both strictly as pure integers, we bypass standard float
 limitations. The system utilizes dynamic scaling factors and structural memory 
 to achieve mathematically lossless arithmetic operations during Addition and Exponentiation for integer powers.
 """
-import math
+
 
 class fixNum:
  

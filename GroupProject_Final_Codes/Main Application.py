@@ -14,7 +14,7 @@ from FixnumModule import fixNum
 from FractionModule import Fraction
 from FractionModule import fixed_pow
 from FractionModule import fraconvert 
-import math
+
 
 def get_number():
     """Asks the user to enter a number in form of a and b
