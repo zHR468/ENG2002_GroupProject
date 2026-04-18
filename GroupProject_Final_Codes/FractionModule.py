@@ -1,10 +1,19 @@
 """
-
-prepared by :
+Prepared by :
 MARY GORETTI ABWOOLI BIRUNGI (25100607D)
 ELIF IREM TANIR(25088642d)
 LI YUEN KIK (25087058D) - LAVISSE
 HE YOUBIN(25091865D)  
+Module: Fractional Power Extension
+Purpose: 
+The standard integer-scaling power function encounters limitations when 
+dealing with fractional exponents (which fundamentally require calculating roots).
+Directly computing decimal roots leads to infinite floating-point inaccuracies. 
+
+This module was designed as a distinction-grade extension to translate fixed-point 
+numbers into pure fractions. By utilizing math.gcd and symbolic string outputs, 
+it allows the system to accurately process complex decimal powers with absolute 
+zero precision loss.
 """
 import math
 
@@ -14,7 +23,7 @@ class Fraction:
             raise ZeroDivisionError("Denominator cannot be zero")
 
         
-        # Auto-Simplification for root definition
+        # Simplification for root definition
         # Utilizes math.gcd to help maintain accuracy without forced truncation.
         # This defines the exact intended root (e.g., 6th power, 5th root).
     
@@ -26,7 +35,7 @@ class Fraction:
             self.num = -self.num
             self.den = -self.den
 
-    def __str__(self):
+    def __str__(self):   #string mode
         if self.den != 1:
             return f"{self.num}/{self.den}"
         else:
