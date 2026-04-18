@@ -104,10 +104,7 @@ def menu():
             result = fixed_pow(base_num.a, str(base_num.b), exp_num.a, str(exp_num.b)) #Calculates fractional power by using power() function from Fraction Class which makes base.b and exp.b as strings for result
             if isinstance(result, tuple):#The result is retrieved as tuple
                 print(f"Result is -> {result[0]}  {result[1]}")#The exact value division is the output
-                print(f"Estimation is -> {(int(result[0].num/result[0].den))**(1/int(result[1].lstrip('to the power of 1/')))}")#Provides an estimation where exact value division is a long number and output is a float-point numnber.
-                print(result[0].num/result[0].den)
-                print(1/int(result[1].lstrip('to the power of 1/')))
-                print((result[0].num/result[0].den)**(1/int(result[1].lstrip('to the power of 1/'))))
+                print(f"Estimation is -> {(result[0].num/result[0].den)**(1/int(result[1].lstrip('to the power of 1/')))}")#Provides an estimation where exact value division is a long number and output is a float-point numnber.
             else:#If result is a single value
                 print(f"Result is -> {result}")#
                 
