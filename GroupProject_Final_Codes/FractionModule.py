@@ -5,6 +5,7 @@ import math
 
 class Fraction: 
     def __init__(self, num, den=1):    # Numerator and Denominator(can't be 0)
+        if den == 0:
             raise ZeroDivisionError("Denominator cannot be zero")
 
         
@@ -57,7 +58,7 @@ class Fraction:
 
 
 def fraconvert(int_part, frac_str):
-   '''
+    '''
     Converts a fixed-point number into fractions
 
     Parameters:
